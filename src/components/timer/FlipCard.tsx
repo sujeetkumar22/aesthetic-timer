@@ -6,6 +6,7 @@ interface FlipCardProps {
   onFlip?: () => void;
   isFullscreen?: boolean;
   cardVariant?: 'two-card' | 'three-card';
+  orientation?: 'horizontal' | 'vertical';
   className?: string;
 }
 
@@ -15,6 +16,7 @@ export const FlipCard: React.FC<FlipCardProps> = ({
   onFlip,
   isFullscreen = false,
   cardVariant,
+  orientation = 'horizontal',
   className = '',
 }) => {
   const [currentVal, setCurrentVal] = useState(value);
@@ -59,7 +61,15 @@ export const FlipCard: React.FC<FlipCardProps> = ({
     };
   }, []);
 
-  const sizeClass = cardVariant
+  const sizeClass = orientation === 'vertical'
+    ? cardVariant === 'three-card'
+      ? isFullscreen
+        ? 'flip-card-vertical-three flip-card-vertical-fullscreen'
+        : 'flip-card-vertical-three'
+      : isFullscreen
+      ? 'flip-card-vertical-two flip-card-vertical-fullscreen'
+      : 'flip-card-vertical-two'
+    : cardVariant
     ? cardVariant === 'three-card'
       ? isFullscreen
         ? 'flip-card-three-fullscreen'
@@ -95,11 +105,12 @@ export const FlipCard: React.FC<FlipCardProps> = ({
         >
           <div className="absolute inset-0 bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none" />
           <div
-            className="absolute top-0 left-0 w-full h-[200%] flex items-center justify-center font-bold tracking-tight tabular-nums leading-none"
+            className="absolute top-0 left-0 w-full h-[200%] flex items-center justify-center font-bold tracking-tight tabular-nums leading-none px-2 sm:px-3 text-center"
             style={{
               color: 'var(--digit-color)',
               fontFamily: 'var(--font-digits)',
               fontSize: 'var(--digit-size, 11rem)',
+              letterSpacing: '-0.025em',
             }}
           >
             {currentVal}
@@ -116,11 +127,12 @@ export const FlipCard: React.FC<FlipCardProps> = ({
         >
           <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent pointer-events-none" />
           <div
-            className="absolute -top-[100%] left-0 w-full h-[200%] flex items-center justify-center font-bold tracking-tight tabular-nums leading-none"
+            className="absolute -top-[100%] left-0 w-full h-[200%] flex items-center justify-center font-bold tracking-tight tabular-nums leading-none px-2 sm:px-3 text-center"
             style={{
               color: 'var(--digit-color)',
               fontFamily: 'var(--font-digits)',
               fontSize: 'var(--digit-size, 11rem)',
+              letterSpacing: '-0.025em',
             }}
           >
             {isFlipping ? prevVal : currentVal}
@@ -137,11 +149,12 @@ export const FlipCard: React.FC<FlipCardProps> = ({
             }}
           >
             <div
-              className="absolute top-0 left-0 w-full h-[200%] flex items-center justify-center font-bold tracking-tight tabular-nums leading-none"
+              className="absolute top-0 left-0 w-full h-[200%] flex items-center justify-center font-bold tracking-tight tabular-nums leading-none px-2 sm:px-3 text-center"
               style={{
                 color: 'var(--digit-color)',
                 fontFamily: 'var(--font-digits)',
                 fontSize: 'var(--digit-size, 11rem)',
+                letterSpacing: '-0.025em',
               }}
             >
               {prevVal}
@@ -162,11 +175,12 @@ export const FlipCard: React.FC<FlipCardProps> = ({
             }}
           >
             <div
-              className="absolute -top-[100%] left-0 w-full h-[200%] flex items-center justify-center font-bold tracking-tight tabular-nums leading-none"
+              className="absolute -top-[100%] left-0 w-full h-[200%] flex items-center justify-center font-bold tracking-tight tabular-nums leading-none px-2 sm:px-3 text-center"
               style={{
                 color: 'var(--digit-color)',
                 fontFamily: 'var(--font-digits)',
                 fontSize: 'var(--digit-size, 11rem)',
+                letterSpacing: '-0.025em',
               }}
             >
               {currentVal}

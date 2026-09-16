@@ -95,6 +95,7 @@ export const StopwatchView: React.FC<StopwatchViewProps> = ({
           onFlip={onFlip}
           isFullscreen={isFullscreen}
           cardVariant="two-card"
+          orientation={orientation}
         />
         {isVertical ? verticalDivider : colonDivider}
         <FlipCard
@@ -103,6 +104,7 @@ export const StopwatchView: React.FC<StopwatchViewProps> = ({
           onFlip={onFlip}
           isFullscreen={isFullscreen}
           cardVariant="two-card"
+          orientation={orientation}
         />
 
         {/* Hundredths Box */}

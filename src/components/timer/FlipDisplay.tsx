@@ -116,6 +116,7 @@ export const FlipDisplay: React.FC<FlipDisplayProps> = ({
               onFlip={onFlip}
               isFullscreen={isFullscreen}
               cardVariant="three-card"
+              orientation={orientation}
             />
             {isVertical ? verticalDivider : colonDivider}
           </>
@@ -128,6 +129,7 @@ export const FlipDisplay: React.FC<FlipDisplayProps> = ({
           onFlip={onFlip}
           isFullscreen={isFullscreen}
           cardVariant={isThreeCard ? 'three-card' : 'two-card'}
+          orientation={orientation}
         />
 
         {/* Center Divider Dots */}
@@ -140,6 +142,7 @@ export const FlipDisplay: React.FC<FlipDisplayProps> = ({
           onFlip={onFlip}
           isFullscreen={isFullscreen}
           cardVariant={isThreeCard ? 'three-card' : 'two-card'}
+          orientation={orientation}
         />
       </div>
     </div>

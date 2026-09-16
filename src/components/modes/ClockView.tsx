@@ -112,6 +112,7 @@ export const ClockView: React.FC<ClockViewProps> = ({
             onFlip={onFlip}
             isFullscreen={isFullscreen}
             cardVariant="three-card"
+            orientation={orientation}
           />
           {/* AM / PM Badge */}
           {ampm && (
@@ -138,6 +139,7 @@ export const ClockView: React.FC<ClockViewProps> = ({
           onFlip={onFlip}
           isFullscreen={isFullscreen}
           cardVariant="three-card"
+          orientation={orientation}
         />
 
         {/* Divider */}
@@ -150,6 +152,7 @@ export const ClockView: React.FC<ClockViewProps> = ({
           onFlip={onFlip}
           isFullscreen={isFullscreen}
           cardVariant="three-card"
+          orientation={orientation}
         />
       </div>
 

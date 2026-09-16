@@ -212,68 +212,68 @@
 .flip-card-two-fullscreen {
   --card-w: min(38vw, calc(68vh * 0.82));
   --card-h: min(68vh, calc(38vw / 0.82));
-  --digit-size: calc(var(--card-h) * 0.72);
+  --digit-size: min(calc(var(--card-w) * 0.55), calc(var(--card-h) * 0.48));
 }
 
 .flip-card-two-windowed {
   --card-w: clamp(140px, 24vw, 340px);
-  --card-h: calc(var(--card-w) * 1.22);
-  --digit-size: calc(var(--card-h) * 0.72);
+  --card-h: calc(var(--card-w) * 1.24);
+  --digit-size: min(calc(var(--card-w) * 0.55), calc(var(--card-h) * 0.48));
 }
 
 /* 3-Card Mode (Live Flip Clock HH:MM:SS, Hours Countdown, Stopwatch) */
 .flip-card-three-fullscreen {
-  --card-w: min(26vw, calc(62vh * 0.76));
-  --card-h: min(62vh, calc(26vw / 0.76));
-  --digit-size: calc(var(--card-h) * 0.72);
+  --card-w: min(27vw, calc(62vh * 0.80));
+  --card-h: min(62vh, calc(27vw / 0.80));
+  --digit-size: min(calc(var(--card-w) * 0.52), calc(var(--card-h) * 0.45));
 }
 
 .flip-card-three-windowed {
-  --card-w: clamp(100px, 17vw, 230px);
-  --card-h: calc(var(--card-w) * 1.22);
-  --digit-size: calc(var(--card-h) * 0.72);
+  --card-w: clamp(105px, 18vw, 240px);
+  --card-h: calc(var(--card-w) * 1.24);
+  --digit-size: min(calc(var(--card-w) * 0.52), calc(var(--card-h) * 0.45));
 }
 
 /* Mobile Screen Protection (< 640px) */
 @media (max-width: 639px) {
   .flip-card-two-fullscreen,
   .flip-card-two-windowed {
-    --card-w: min(41vw, 155px);
-    --card-h: calc(var(--card-w) * 1.22);
-    --digit-size: calc(var(--card-h) * 0.72);
+    --card-w: min(42vw, 160px);
+    --card-h: calc(var(--card-w) * 1.24);
+    --digit-size: min(calc(var(--card-w) * 0.55), calc(var(--card-h) * 0.48));
   }
 
   .flip-card-three-fullscreen,
   .flip-card-three-windowed {
-    --card-w: min(26vw, 98px);
-    --card-h: calc(var(--card-w) * 1.22);
-    --digit-size: calc(var(--card-h) * 0.72);
+    --card-w: min(28vw, 105px);
+    --card-h: calc(var(--card-w) * 1.24);
+    --digit-size: min(calc(var(--card-w) * 0.52), calc(var(--card-h) * 0.45));
   }
 }
 
 /* Vertical Stacked Cards (Optimized for Portrait Mobile & Tall Screen Orientation) */
 .flip-card-vertical-two {
-  --card-w: min(78vw, 320px);
-  --card-h: min(28vh, 180px);
-  --digit-size: calc(var(--card-h) * 0.72);
+  --card-w: min(80vw, 340px);
+  --card-h: min(26vh, 180px);
+  --digit-size: min(calc(var(--card-w) * 0.45), calc(var(--card-h) * 0.58));
 }
 
 .flip-card-vertical-two.flip-card-vertical-fullscreen {
-  --card-w: min(84vw, 360px);
-  --card-h: min(34vh, 220px);
-  --digit-size: calc(var(--card-h) * 0.72);
+  --card-w: min(86vw, 380px);
+  --card-h: min(32vh, 220px);
+  --digit-size: min(calc(var(--card-w) * 0.48), calc(var(--card-h) * 0.60));
 }
 
 .flip-card-vertical-three {
-  --card-w: min(74vw, 280px);
-  --card-h: min(19vh, 130px);
-  --digit-size: calc(var(--card-h) * 0.70);
+  --card-w: min(76vw, 300px);
+  --card-h: min(19vh, 135px);
+  --digit-size: min(calc(var(--card-w) * 0.40), calc(var(--card-h) * 0.55));
 }
 
 .flip-card-vertical-three.flip-card-vertical-fullscreen {
-  --card-w: min(80vw, 310px);
-  --card-h: min(23vh, 150px);
-  --digit-size: calc(var(--card-h) * 0.72);
+  --card-w: min(82vw, 330px);
+  --card-h: min(22vh, 155px);
+  --digit-size: min(calc(var(--card-w) * 0.42), calc(var(--card-h) * 0.58));
 }
 
 /* Mobile Landscape Orientation (< 520px height, typical horizontal phones) */
@@ -282,14 +282,14 @@
   .flip-card-two-windowed {
     --card-h: min(65vh, 240px);
     --card-w: calc(var(--card-h) * 0.82);
-    --digit-size: calc(var(--card-h) * 0.72);
+    --digit-size: min(calc(var(--card-w) * 0.55), calc(var(--card-h) * 0.48));
   }
 
   .flip-card-three-fullscreen,
   .flip-card-three-windowed {
     --card-h: min(58vh, 210px);
-    --card-w: calc(var(--card-h) * 0.78);
-    --digit-size: calc(var(--card-h) * 0.72);
+    --card-w: calc(var(--card-h) * 0.80);
+    --digit-size: min(calc(var(--card-w) * 0.52), calc(var(--card-h) * 0.45));
   }
 }
 
