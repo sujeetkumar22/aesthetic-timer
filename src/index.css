@@ -1,0 +1,271 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* 1. Midnight Black Theme (Classic Dark) */
+  :root, [data-theme="classic"] {
+    --bg-color: #09090c;
+    --card-color: #15151b;
+    --card-top: #191922;
+    --card-bottom: #121217;
+    --digit-color: #f4f4f7;
+    --muted-color: #a1a1aa;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --seam-line: #08080a;
+    --seam-highlight: rgba(255, 255, 255, 0.09);
+    --shadow-color: rgba(0, 0, 0, 0.85);
+    --accent-color: #ffffff;
+    --glow-color: rgba(255, 255, 255, 0.04);
+    --nav-bg: rgba(21, 21, 27, 0.85);
+  }
+
+  /* 2. Baby Pink Theme (Aesthetic Pastel Pink with High-Contrast Berry Text) */
+  [data-theme="babyPink"] {
+    --bg-color: #fff0f5;
+    --card-color: #ffd6e2;
+    --card-top: #ffe3ec;
+    --card-bottom: #f8ccd9;
+    --digit-color: #701a45;
+    --muted-color: #9d174d;
+    --border-color: rgba(190, 24, 93, 0.22);
+    --seam-line: #db2777;
+    --seam-highlight: rgba(255, 255, 255, 0.95);
+    --shadow-color: rgba(157, 23, 77, 0.15);
+    --accent-color: #db2777;
+    --glow-color: rgba(219, 39, 119, 0.15);
+    --nav-bg: rgba(255, 227, 236, 0.9);
+  }
+
+  /* 3. Lavender Dream Theme */
+  [data-theme="lavender"] {
+    --bg-color: #0f0c1b;
+    --card-color: #1a162b;
+    --card-top: #201b35;
+    --card-bottom: #151224;
+    --digit-color: #f5eeff;
+    --muted-color: #c084fc;
+    --border-color: rgba(192, 132, 252, 0.25);
+    --seam-line: #0a0812;
+    --seam-highlight: rgba(245, 238, 255, 0.15);
+    --shadow-color: rgba(0, 0, 0, 0.85);
+    --accent-color: #c084fc;
+    --glow-color: rgba(192, 132, 252, 0.12);
+    --nav-bg: rgba(26, 22, 43, 0.85);
+  }
+
+  /* 4. Warm Cream / Sand Theme (Light Warm Stone with Dark Espresso Text) */
+  [data-theme="cream"] {
+    --bg-color: #f7f4ed;
+    --card-color: #ebe3d3;
+    --card-top: #f3ece0;
+    --card-bottom: #e5dcc9;
+    --digit-color: #1c1917;
+    --muted-color: #57534e;
+    --border-color: rgba(41, 37, 36, 0.16);
+    --seam-line: #a8a29e;
+    --seam-highlight: rgba(255, 255, 255, 0.95);
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --accent-color: #292524;
+    --glow-color: rgba(0, 0, 0, 0.03);
+    --nav-bg: rgba(243, 236, 224, 0.9);
+  }
+
+  /* 5. Cyber Cyan Theme */
+  [data-theme="cyan"] {
+    --bg-color: #060e15;
+    --card-color: #0d1c28;
+    --card-top: #112434;
+    --card-bottom: #0a1721;
+    --digit-color: #e0f7fe;
+    --muted-color: #38bdf8;
+    --border-color: rgba(56, 189, 248, 0.25);
+    --seam-line: #04080d;
+    --seam-highlight: rgba(224, 247, 254, 0.18);
+    --shadow-color: rgba(0, 0, 0, 0.85);
+    --accent-color: #06b6d4;
+    --glow-color: rgba(6, 182, 212, 0.12);
+    --nav-bg: rgba(13, 28, 40, 0.85);
+  }
+
+  /* 6. Matcha Sage Theme */
+  [data-theme="matcha"] {
+    --bg-color: #09130d;
+    --card-color: #12241a;
+    --card-top: #162c20;
+    --card-bottom: #0e1c14;
+    --digit-color: #ecfdf5;
+    --muted-color: #34d399;
+    --border-color: rgba(52, 211, 153, 0.25);
+    --seam-line: #070d0a;
+    --seam-highlight: rgba(236, 253, 245, 0.18);
+    --shadow-color: rgba(0, 0, 0, 0.85);
+    --accent-color: #10b981;
+    --glow-color: rgba(16, 185, 129, 0.12);
+    --nav-bg: rgba(18, 36, 26, 0.85);
+  }
+
+  /* 7. Sunset Crimson Theme */
+  [data-theme="sunset"] {
+    --bg-color: #14080b;
+    --card-color: #240f13;
+    --card-top: #2b1318;
+    --card-bottom: #1c0a0e;
+    --digit-color: #fff1f2;
+    --muted-color: #fb7185;
+    --border-color: rgba(251, 113, 133, 0.25);
+    --seam-line: #0d0608;
+    --seam-highlight: rgba(255, 241, 242, 0.18);
+    --shadow-color: rgba(0, 0, 0, 0.85);
+    --accent-color: #f43f5e;
+    --glow-color: rgba(244, 63, 94, 0.12);
+    --nav-bg: rgba(36, 15, 19, 0.85);
+  }
+
+  html, body {
+    background-color: var(--bg-color);
+    color: var(--digit-color);
+    font-family: var(--app-font, 'Outfit', sans-serif);
+    user-select: none;
+    -webkit-user-select: none;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    overflow-x: hidden;
+  }
+
+  input, textarea {
+    user-select: text;
+    -webkit-user-select: text;
+  }
+}
+
+/* =========================================================================
+   Ultra-Smooth, Glitch-Free 3D Split-Flap Animation Engine
+   ========================================================================= */
+
+.flip-perspective {
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
+}
+
+.flip-card-half {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* 1. Upper Flap: folds down 0deg -> -90deg smoothly */
+@keyframes foldUpper {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(-90deg);
+  }
+}
+
+/* 2. Lower Flap: drops down 90deg -> 0deg with zero pop/glitch */
+@keyframes dropLower {
+  0% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+.animate-fold-upper {
+  animation: foldUpper 0.22s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+  transform-origin: bottom center;
+}
+
+.animate-drop-lower {
+  animation: dropLower 0.22s cubic-bezier(0.25, 1, 0.5, 1) 0.20s both;
+  transform-origin: top center;
+}
+
+/* Dynamic Lighting Shading */
+@keyframes shadowFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 0.6; }
+}
+
+@keyframes highlightFadeOut {
+  0% { opacity: 0.5; }
+  100% { opacity: 0; }
+}
+
+.shadow-overlay-upper {
+  animation: shadowFadeIn 0.22s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+}
+
+.highlight-overlay-lower {
+  animation: highlightFadeOut 0.22s cubic-bezier(0.25, 1, 0.5, 1) 0.20s both;
+}
+
+/* =========================================================================
+   Responsive Split-Flap Card Sizing (Respectable Margins & Mobile Perfection)
+   ========================================================================= */
+
+/* 2-Card Mode (Countdown MM:SS & Pomodoro MM:SS) */
+.flip-card-two-fullscreen {
+  --card-w: min(38vw, calc(68vh * 0.82));
+  --card-h: min(68vh, calc(38vw / 0.82));
+  --digit-size: calc(var(--card-h) * 0.72);
+}
+
+.flip-card-two-windowed {
+  --card-w: clamp(140px, 24vw, 340px);
+  --card-h: calc(var(--card-w) * 1.22);
+  --digit-size: calc(var(--card-h) * 0.72);
+}
+
+/* 3-Card Mode (Live Flip Clock HH:MM:SS, Hours Countdown, Stopwatch) */
+.flip-card-three-fullscreen {
+  --card-w: min(26vw, calc(62vh * 0.76));
+  --card-h: min(62vh, calc(26vw / 0.76));
+  --digit-size: calc(var(--card-h) * 0.72);
+}
+
+.flip-card-three-windowed {
+  --card-w: clamp(100px, 17vw, 230px);
+  --card-h: calc(var(--card-w) * 1.22);
+  --digit-size: calc(var(--card-h) * 0.72);
+}
+
+/* Mobile Screen Protection (< 640px) */
+@media (max-width: 639px) {
+  .flip-card-two-fullscreen,
+  .flip-card-two-windowed {
+    --card-w: min(41vw, 155px);
+    --card-h: calc(var(--card-w) * 1.22);
+    --digit-size: calc(var(--card-h) * 0.72);
+  }
+
+  .flip-card-three-fullscreen,
+  .flip-card-three-windowed {
+    --card-w: min(26vw, 98px);
+    --card-h: calc(var(--card-w) * 1.22);
+    --digit-size: calc(var(--card-h) * 0.72);
+  }
+}
+
+/* Accessibility Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fold-upper,
+  .animate-drop-lower,
+  .shadow-overlay-upper,
+  .highlight-overlay-lower {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
