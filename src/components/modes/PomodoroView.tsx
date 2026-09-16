@@ -15,6 +15,7 @@ interface PomodoroViewProps {
   onSetPhase: (phase: PomodoroPhase) => void;
   onFlip?: () => void;
   isFullscreen?: boolean;
+  orientation?: 'horizontal' | 'vertical';
 }
 
 export const PomodoroView: React.FC<PomodoroViewProps> = ({
@@ -29,6 +30,7 @@ export const PomodoroView: React.FC<PomodoroViewProps> = ({
   onSetPhase,
   onFlip,
   isFullscreen = false,
+  orientation = 'horizontal',
 }) => {
   const isRunning = status === 'running';
 
@@ -94,6 +96,7 @@ export const PomodoroView: React.FC<PomodoroViewProps> = ({
         totalSeconds={remainingSeconds}
         onFlip={onFlip}
         isFullscreen={isFullscreen}
+        orientation={orientation}
       />
 
       {/* Mode Sub-Controls (in non-fullscreen or when controls visible) */}

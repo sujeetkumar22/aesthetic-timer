@@ -1,7 +1,7 @@
 import React from 'react';
-import { TimerMode } from '../../types/timer';
+import { TimerMode, ViewOrientation } from '../../types/timer';
 import { ModeTabs } from '../setup/ModeTabs';
-import { Settings, Volume2, VolumeX, Maximize2, Minimize2 } from 'lucide-react';
+import { Settings, Volume2, VolumeX, Maximize2, Minimize2, Smartphone } from 'lucide-react';
 
 interface HeaderProps {
   currentMode: TimerMode;
@@ -13,6 +13,8 @@ interface HeaderProps {
   onOpenSettings: () => void;
   isTimerRunning: boolean;
   onLogoClick: () => void;
+  viewOrientation?: ViewOrientation;
+  onToggleOrientation?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -25,6 +27,8 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenSettings,
   isTimerRunning,
   onLogoClick,
+  viewOrientation = 'horizontal',
+  onToggleOrientation,
 }) => {
   return (
     <header className="w-full flex flex-col sm:flex-row items-center justify-between px-3 sm:px-8 py-3 sm:py-5 select-none z-30 transition-opacity duration-300">
@@ -49,6 +53,25 @@ export const Header: React.FC<HeaderProps> = ({
           className="flex sm:hidden items-center gap-1.5 transition-colors"
           style={{ color: 'var(--muted-color)' }}
         >
+          {onToggleOrientation && (
+            <button
+              onClick={onToggleOrientation}
+              className="p-1.5 hover:opacity-100 opacity-80 rounded-full transition-all"
+              title={
+                viewOrientation === 'vertical'
+                  ? 'Switch to Horizontal View'
+                  : 'Switch to Vertical View'
+              }
+              aria-label="Toggle Horizontal or Vertical View"
+            >
+              <Smartphone
+                className={`w-4 h-4 transition-transform duration-300 ${
+                  viewOrientation === 'horizontal' ? 'rotate-90' : ''
+                }`}
+              />
+            </button>
+          )}
+
           <button
             onClick={onToggleSound}
             className="p-1.5 hover:opacity-100 opacity-80 rounded-full transition-all"
@@ -98,6 +121,25 @@ export const Header: React.FC<HeaderProps> = ({
         className="hidden sm:flex items-center gap-2 sm:gap-3 transition-colors"
         style={{ color: 'var(--muted-color)' }}
       >
+        {onToggleOrientation && (
+          <button
+            onClick={onToggleOrientation}
+            className="p-2 hover:opacity-100 opacity-80 rounded-full transition-all"
+            title={
+              viewOrientation === 'vertical'
+                ? 'Switch to Horizontal View'
+                : 'Switch to Vertical View'
+            }
+            aria-label="Toggle Horizontal or Vertical View"
+          >
+            <Smartphone
+              className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 ${
+                viewOrientation === 'horizontal' ? 'rotate-90' : ''
+              }`}
+            />
+          </button>
+        )}
+
         <button
           onClick={onToggleSound}
           className="p-2 hover:opacity-100 opacity-80 rounded-full transition-all"

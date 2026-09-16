@@ -7,6 +7,7 @@ interface ClockViewProps {
   onToggleFormat: () => void;
   onFlip?: () => void;
   isFullscreen?: boolean;
+  orientation?: 'horizontal' | 'vertical';
 }
 
 export const ClockView: React.FC<ClockViewProps> = ({
@@ -14,11 +15,17 @@ export const ClockView: React.FC<ClockViewProps> = ({
   onToggleFormat,
   onFlip,
   isFullscreen = false,
+  orientation = 'horizontal',
 }) => {
   const safeFormat = format || '12h';
   const { hoursStr, minutesStr, secondsStr, ampm, dateStr } = useClock(safeFormat);
+  const isVertical = orientation === 'vertical';
 
-  const sizingClass = isFullscreen ? 'flip-card-three-fullscreen' : 'flip-card-three-windowed';
+  const sizingClass = isVertical
+    ? `flip-card-vertical-three ${isFullscreen ? 'flip-card-vertical-fullscreen' : ''}`
+    : isFullscreen
+    ? 'flip-card-three-fullscreen'
+    : 'flip-card-three-windowed';
 
   const colonDivider = (
     <div
@@ -43,6 +50,19 @@ export const ClockView: React.FC<ClockViewProps> = ({
           width: 'calc(var(--card-h, 160px) * 0.045)',
           height: 'calc(var(--card-h, 160px) * 0.045)',
         }}
+      />
+    </div>
+  );
+
+  const verticalDivider = (
+    <div className="flex items-center justify-center gap-2 py-0.5 select-none opacity-35">
+      <span
+        className="w-1.5 h-1.5 rounded-full transition-all duration-300"
+        style={{ backgroundColor: 'var(--digit-color)' }}
+      />
+      <span
+        className="w-1.5 h-1.5 rounded-full transition-all duration-300"
+        style={{ backgroundColor: 'var(--digit-color)' }}
       />
     </div>
   );
@@ -77,7 +97,13 @@ export const ClockView: React.FC<ClockViewProps> = ({
       </div>
 
       {/* The Big Live Flip Clock */}
-      <div className="flex items-center justify-center gap-1 sm:gap-2.5 md:gap-4 lg:gap-5 px-1 sm:px-4">
+      <div
+        className={`flex ${
+          isVertical
+            ? 'flex-col items-center justify-center gap-1.5 sm:gap-2 px-2'
+            : 'flex-row items-center justify-center gap-1 sm:gap-2.5 md:gap-4 lg:gap-5 px-1 sm:px-4'
+        }`}
+      >
         {/* Hours */}
         <div className="relative">
           <FlipCard
@@ -102,8 +128,8 @@ export const ClockView: React.FC<ClockViewProps> = ({
           )}
         </div>
 
-        {/* Colon Divider */}
-        {colonDivider}
+        {/* Divider */}
+        {isVertical ? verticalDivider : colonDivider}
 
         {/* Minutes */}
         <FlipCard
@@ -114,8 +140,8 @@ export const ClockView: React.FC<ClockViewProps> = ({
           cardVariant="three-card"
         />
 
-        {/* Colon Divider */}
-        {colonDivider}
+        {/* Divider */}
+        {isVertical ? verticalDivider : colonDivider}
 
         {/* Seconds */}
         <FlipCard

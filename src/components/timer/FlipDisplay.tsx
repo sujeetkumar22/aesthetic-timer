@@ -9,6 +9,7 @@ interface FlipDisplayProps {
   statusBadge?: string;
   isFullscreen?: boolean;
   onBadgeClick?: () => void;
+  orientation?: 'horizontal' | 'vertical';
 }
 
 export const FlipDisplay: React.FC<FlipDisplayProps> = ({
@@ -18,12 +19,18 @@ export const FlipDisplay: React.FC<FlipDisplayProps> = ({
   statusBadge,
   isFullscreen = false,
   onBadgeClick,
+  orientation = 'horizontal',
 }) => {
   const { hoursStr, minutesStr, secondsStr, hasHours } = formatTimeDisplay(totalSeconds);
   const showHours = showHoursAlways || hasHours;
   const isThreeCard = showHours;
+  const isVertical = orientation === 'vertical';
 
-  const sizingClass = isThreeCard
+  const sizingClass = isVertical
+    ? isThreeCard
+      ? `flip-card-vertical-three ${isFullscreen ? 'flip-card-vertical-fullscreen' : ''}`
+      : `flip-card-vertical-two ${isFullscreen ? 'flip-card-vertical-fullscreen' : ''}`
+    : isThreeCard
     ? isFullscreen
       ? 'flip-card-three-fullscreen'
       : 'flip-card-three-windowed'
@@ -58,6 +65,19 @@ export const FlipDisplay: React.FC<FlipDisplayProps> = ({
     </div>
   );
 
+  const verticalDivider = (
+    <div className="flex items-center justify-center gap-2 py-0.5 select-none opacity-35">
+      <span
+        className="w-1.5 h-1.5 rounded-full transition-all duration-300"
+        style={{ backgroundColor: 'var(--digit-color)' }}
+      />
+      <span
+        className="w-1.5 h-1.5 rounded-full transition-all duration-300"
+        style={{ backgroundColor: 'var(--digit-color)' }}
+      />
+    </div>
+  );
+
   return (
     <div className={`flex flex-col items-center justify-center max-w-full transition-all duration-300 ${sizingClass}`}>
       {/* Status / Context Badge above clock */}
@@ -80,7 +100,13 @@ export const FlipDisplay: React.FC<FlipDisplayProps> = ({
       )}
 
       {/* Flip Cards Grid */}
-      <div className="flex items-center justify-center gap-1.5 sm:gap-3 md:gap-5 lg:gap-6 px-1 sm:px-4">
+      <div
+        className={`flex ${
+          isVertical
+            ? 'flex-col items-center justify-center gap-1.5 sm:gap-2 px-2'
+            : 'flex-row items-center justify-center gap-1.5 sm:gap-3 md:gap-5 lg:gap-6 px-1 sm:px-4'
+        }`}
+      >
         {/* Hours Group (if > 0 or always enabled) */}
         {showHours && (
           <>
@@ -91,7 +117,7 @@ export const FlipDisplay: React.FC<FlipDisplayProps> = ({
               isFullscreen={isFullscreen}
               cardVariant="three-card"
             />
-            {colonDivider}
+            {isVertical ? verticalDivider : colonDivider}
           </>
         )}
 
@@ -105,7 +131,7 @@ export const FlipDisplay: React.FC<FlipDisplayProps> = ({
         />
 
         {/* Center Divider Dots */}
-        {colonDivider}
+        {isVertical ? verticalDivider : colonDivider}
 
         {/* Seconds Card */}
         <FlipCard

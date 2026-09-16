@@ -6,6 +6,7 @@ interface KeyboardShortcutHandlers {
   onToggleFullscreen?: () => void;
   onExitFullscreen?: () => void;
   onToggleMute?: () => void;
+  onToggleOrientation?: () => void;
   onAddTime?: (seconds: number) => void;
   onSubtractTime?: (seconds: number) => void;
 }
@@ -16,6 +17,7 @@ export function useKeyboardShortcuts({
   onToggleFullscreen,
   onExitFullscreen,
   onToggleMute,
+  onToggleOrientation,
   onAddTime,
   onSubtractTime,
 }: KeyboardShortcutHandlers, enabled: boolean = true) {
@@ -57,6 +59,12 @@ export function useKeyboardShortcuts({
           if (!e.ctrlKey && !e.metaKey) {
             e.preventDefault();
             onToggleMute?.();
+          }
+          break;
+        case 'KeyV':
+          if (!e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+            onToggleOrientation?.();
           }
           break;
         case 'Escape':

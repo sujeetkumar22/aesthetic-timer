@@ -251,6 +251,48 @@
   }
 }
 
+/* Vertical Stacked Cards (Optimized for Portrait Mobile & Tall Screen Orientation) */
+.flip-card-vertical-two {
+  --card-w: min(78vw, 320px);
+  --card-h: min(28vh, 180px);
+  --digit-size: calc(var(--card-h) * 0.72);
+}
+
+.flip-card-vertical-two.flip-card-vertical-fullscreen {
+  --card-w: min(84vw, 360px);
+  --card-h: min(34vh, 220px);
+  --digit-size: calc(var(--card-h) * 0.72);
+}
+
+.flip-card-vertical-three {
+  --card-w: min(74vw, 280px);
+  --card-h: min(19vh, 130px);
+  --digit-size: calc(var(--card-h) * 0.70);
+}
+
+.flip-card-vertical-three.flip-card-vertical-fullscreen {
+  --card-w: min(80vw, 310px);
+  --card-h: min(23vh, 150px);
+  --digit-size: calc(var(--card-h) * 0.72);
+}
+
+/* Mobile Landscape Orientation (< 520px height, typical horizontal phones) */
+@media (orientation: landscape) and (max-height: 520px) {
+  .flip-card-two-fullscreen,
+  .flip-card-two-windowed {
+    --card-h: min(65vh, 240px);
+    --card-w: calc(var(--card-h) * 0.82);
+    --digit-size: calc(var(--card-h) * 0.72);
+  }
+
+  .flip-card-three-fullscreen,
+  .flip-card-three-windowed {
+    --card-h: min(58vh, 210px);
+    --card-w: calc(var(--card-h) * 0.78);
+    --digit-size: calc(var(--card-h) * 0.72);
+  }
+}
+
 /* Accessibility Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   .animate-fold-upper,

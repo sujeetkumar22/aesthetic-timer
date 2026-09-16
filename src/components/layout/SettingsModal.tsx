@@ -266,6 +266,45 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   {(settings.clockFormat || '12h').toUpperCase()}
                 </button>
               </div>
+
+              {/* View Orientation (Horizontal / Vertical) */}
+              <div className="flex items-center justify-between pt-2 border-t" style={{ borderColor: 'var(--border-color)' }}>
+                <div>
+                  <div className="font-medium">Timer View Orientation</div>
+                  <div className="text-[11px] opacity-75" style={{ color: 'var(--muted-color)' }}>
+                    Horizontal (Side-by-side) or Vertical (Stacked Flaps)
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={() => onUpdateSettings((s) => ({ ...s, viewOrientation: 'horizontal' }))}
+                    className={`text-xs px-2.5 py-1 rounded-lg font-medium border transition-colors ${
+                      (settings.viewOrientation || 'horizontal') === 'horizontal' ? 'font-bold shadow-sm' : 'opacity-60'
+                    }`}
+                    style={{
+                      borderColor: 'var(--border-color)',
+                      backgroundColor:
+                        (settings.viewOrientation || 'horizontal') === 'horizontal' ? 'var(--card-top)' : 'transparent',
+                      color: 'var(--digit-color)',
+                    }}
+                  >
+                    Horizontal
+                  </button>
+                  <button
+                    onClick={() => onUpdateSettings((s) => ({ ...s, viewOrientation: 'vertical' }))}
+                    className={`text-xs px-2.5 py-1 rounded-lg font-medium border transition-colors ${
+                      settings.viewOrientation === 'vertical' ? 'font-bold shadow-sm' : 'opacity-60'
+                    }`}
+                    style={{
+                      borderColor: 'var(--border-color)',
+                      backgroundColor: settings.viewOrientation === 'vertical' ? 'var(--card-top)' : 'transparent',
+                      color: 'var(--digit-color)',
+                    }}
+                  >
+                    Vertical
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 

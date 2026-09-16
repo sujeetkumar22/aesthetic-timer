@@ -39,6 +39,7 @@ const DEFAULT_SETTINGS: AppSettings = {
   ambientType: 'rain',
   autoHideControls: true,
   clockFormat: '12h',
+  viewOrientation: 'horizontal',
   keepScreenAwake: true,
   desktopNotifications: false,
   focusIntention: '',
@@ -123,6 +124,15 @@ export const App: React.FC = () => {
       soundSynth.setMuted(!nextVal);
       showToast(nextVal ? 'Sound Enabled' : 'Sound Muted');
       return { ...s, soundEnabled: nextVal };
+    });
+  }, [setSettings]);
+
+  // Toggle View Orientation (Horizontal / Vertical)
+  const handleToggleOrientation = useCallback(() => {
+    setSettings((s) => {
+      const next = s.viewOrientation === 'vertical' ? 'horizontal' : 'vertical';
+      showToast(next === 'vertical' ? '📱 Vertical View (Stacked)' : '💻 Horizontal View (Side-by-side)');
+      return { ...s, viewOrientation: next };
     });
   }, [setSettings]);
 
@@ -305,6 +315,7 @@ export const App: React.FC = () => {
     onToggleFullscreen: toggleFullscreen,
     onExitFullscreen: exitFullscreen,
     onToggleMute: handleToggleMute,
+    onToggleOrientation: handleToggleOrientation,
     onAddTime: (sec) => {
       if (mode === 'countdown') {
         timer.adjustTime(sec);
@@ -387,6 +398,8 @@ export const App: React.FC = () => {
           onOpenSettings={() => setIsSettingsOpen(true)}
           isTimerRunning={!isSetupView && isTimerRunning}
           onLogoClick={() => setIsSetupView(true)}
+          viewOrientation={settings.viewOrientation}
+          onToggleOrientation={handleToggleOrientation}
         />
       </div>
 
@@ -437,6 +450,7 @@ export const App: React.FC = () => {
                   isFullscreen={isFullscreen}
                   showHoursAlways={timer.totalDuration >= 3600}
                   onBadgeClick={() => setIsExactTimeModalOpen(true)}
+                  orientation={settings.viewOrientation}
                 />
 
                 {/* Floating Controls with Theme Swatches */}
@@ -475,6 +489,8 @@ export const App: React.FC = () => {
                     onSelectAmbientType={handleSelectAmbientType}
                     onOpenSettings={() => setIsSettingsOpen(true)}
                     onOpenExactTimeModal={() => setIsExactTimeModalOpen(true)}
+                    viewOrientation={settings.viewOrientation}
+                    onToggleOrientation={handleToggleOrientation}
                     onReturnToSetup={() => {
                       timer.pause();
                       setIsSetupView(true);
@@ -515,6 +531,7 @@ export const App: React.FC = () => {
               }}
               onFlip={playFlip}
               isFullscreen={isFullscreen}
+              orientation={settings.viewOrientation}
             />
 
             {/* Bottom Controls */}
@@ -546,6 +563,8 @@ export const App: React.FC = () => {
                 onToggleAmbient={handleToggleAmbient}
                 onSelectAmbientType={handleSelectAmbientType}
                 onOpenSettings={() => setIsSettingsOpen(true)}
+                viewOrientation={settings.viewOrientation}
+                onToggleOrientation={handleToggleOrientation}
                 onReturnToSetup={() => {
                   pomoTimer.pause();
                   setMode('countdown');
@@ -568,6 +587,7 @@ export const App: React.FC = () => {
               onAddLap={stopwatch.addLap}
               onFlip={playFlip}
               isFullscreen={isFullscreen}
+              orientation={settings.viewOrientation}
             />
 
             <div
@@ -598,6 +618,8 @@ export const App: React.FC = () => {
                 onToggleAmbient={handleToggleAmbient}
                 onSelectAmbientType={handleSelectAmbientType}
                 onOpenSettings={() => setIsSettingsOpen(true)}
+                viewOrientation={settings.viewOrientation}
+                onToggleOrientation={handleToggleOrientation}
                 onReturnToSetup={() => {
                   stopwatch.pause();
                   setMode('countdown');
@@ -620,6 +642,7 @@ export const App: React.FC = () => {
               }}
               onFlip={playFlip}
               isFullscreen={isFullscreen}
+              orientation={settings.viewOrientation}
             />
 
             {/* Distraction-Free Controls */}
@@ -649,6 +672,8 @@ export const App: React.FC = () => {
                 onToggleAmbient={handleToggleAmbient}
                 onSelectAmbientType={handleSelectAmbientType}
                 onOpenSettings={() => setIsSettingsOpen(true)}
+                viewOrientation={settings.viewOrientation}
+                onToggleOrientation={handleToggleOrientation}
               />
             </div>
           </div>

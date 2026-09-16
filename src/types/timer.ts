@@ -31,6 +31,8 @@ export interface StopwatchLap {
   totalTime: number; // in milliseconds
 }
 
+export type ViewOrientation = 'horizontal' | 'vertical';
+
 export interface AppSettings {
   soundEnabled: boolean;
   flipSoundEnabled: boolean;
@@ -42,6 +44,7 @@ export interface AppSettings {
   ambientType: AmbientSoundType;
   autoHideControls: boolean;
   clockFormat: '12h' | '24h';
+  viewOrientation: ViewOrientation;
   keepScreenAwake: boolean;
   desktopNotifications: boolean;
   focusIntention: string;

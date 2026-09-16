@@ -13,6 +13,7 @@ interface StopwatchViewProps {
   onAddLap: () => void;
   onFlip?: () => void;
   isFullscreen?: boolean;
+  orientation?: 'horizontal' | 'vertical';
 }
 
 export const StopwatchView: React.FC<StopwatchViewProps> = ({
@@ -24,11 +25,17 @@ export const StopwatchView: React.FC<StopwatchViewProps> = ({
   onAddLap,
   onFlip,
   isFullscreen = false,
+  orientation = 'horizontal',
 }) => {
   const isRunning = status === 'running';
   const { minutesStr, secondsStr, hundredthsStr } = formatMsToStopwatch(elapsedMs);
+  const isVertical = orientation === 'vertical';
 
-  const sizingClass = isFullscreen ? 'flip-card-two-fullscreen' : 'flip-card-two-windowed';
+  const sizingClass = isVertical
+    ? `flip-card-vertical-two ${isFullscreen ? 'flip-card-vertical-fullscreen' : ''}`
+    : isFullscreen
+    ? 'flip-card-two-fullscreen'
+    : 'flip-card-two-windowed';
 
   const colonDivider = (
     <div
@@ -57,12 +64,31 @@ export const StopwatchView: React.FC<StopwatchViewProps> = ({
     </div>
   );
 
+  const verticalDivider = (
+    <div className="flex items-center justify-center gap-2 py-0.5 select-none opacity-35">
+      <span
+        className="w-1.5 h-1.5 rounded-full transition-all duration-300"
+        style={{ backgroundColor: 'var(--digit-color)' }}
+      />
+      <span
+        className="w-1.5 h-1.5 rounded-full transition-all duration-300"
+        style={{ backgroundColor: 'var(--digit-color)' }}
+      />
+    </div>
+  );
+
   return (
     <div
       className={`flex flex-col items-center justify-center flex-1 w-full gap-3 sm:gap-6 animate-fade-in ${sizingClass}`}
     >
       {/* Stopwatch Hero Flip Display */}
-      <div className="flex items-center justify-center gap-1 sm:gap-2.5 md:gap-4 px-1 sm:px-4">
+      <div
+        className={`flex ${
+          isVertical
+            ? 'flex-col items-center justify-center gap-2 px-2'
+            : 'flex-row items-center justify-center gap-1 sm:gap-2.5 md:gap-4 px-1 sm:px-4'
+        }`}
+      >
         <FlipCard
           value={minutesStr}
           label="Minutes"
@@ -70,7 +96,7 @@ export const StopwatchView: React.FC<StopwatchViewProps> = ({
           isFullscreen={isFullscreen}
           cardVariant="two-card"
         />
-        {colonDivider}
+        {isVertical ? verticalDivider : colonDivider}
         <FlipCard
           value={secondsStr}
           label="Seconds"
@@ -80,7 +106,7 @@ export const StopwatchView: React.FC<StopwatchViewProps> = ({
         />
 
         {/* Hundredths Box */}
-        <div className="flex flex-col items-center justify-center pl-1 sm:pl-2">
+        <div className={`flex items-center justify-center ${isVertical ? 'pt-1 gap-2' : 'flex-col pl-1 sm:pl-2'}`}>
           <div
             className="px-2.5 py-1.5 sm:px-3 sm:py-2.5 md:px-4 md:py-3 rounded-xl sm:rounded-2xl border font-mono font-bold text-base sm:text-2xl md:text-3xl tabular-nums shadow-lg transition-colors"
             style={{
@@ -92,7 +118,7 @@ export const StopwatchView: React.FC<StopwatchViewProps> = ({
             .{hundredthsStr}
           </div>
           <span
-            className="mt-1 sm:mt-2 text-[9px] sm:text-xs tracking-wider uppercase font-medium transition-colors"
+            className={`${isVertical ? 'text-[11px]' : 'mt-1 sm:mt-2 text-[9px] sm:text-xs'} tracking-wider uppercase font-medium transition-colors`}
             style={{ color: 'var(--muted-color)' }}
           >
             MS

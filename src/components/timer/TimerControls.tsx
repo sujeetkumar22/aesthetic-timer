@@ -16,8 +16,9 @@ import {
   Wind,
   Sparkles,
   Clock,
+  Smartphone,
 } from 'lucide-react';
-import { TimerStatus, ThemeId, AmbientSoundType } from '../../types/timer';
+import { TimerStatus, ThemeId, AmbientSoundType, ViewOrientation } from '../../types/timer';
 import { ThemeSelector } from '../common/ThemeSelector';
 
 interface TimerControlsProps {
@@ -42,6 +43,8 @@ interface TimerControlsProps {
   onOpenExactTimeModal?: () => void;
   onReturnToSetup?: () => void;
   onShare?: () => void;
+  viewOrientation?: ViewOrientation;
+  onToggleOrientation?: () => void;
   className?: string;
 }
 
@@ -80,6 +83,8 @@ export const TimerControls: React.FC<TimerControlsProps> = ({
   onOpenExactTimeModal,
   onReturnToSetup,
   onShare,
+  viewOrientation = 'horizontal',
+  onToggleOrientation,
   className = '',
 }) => {
   const isRunning = status === 'running';
@@ -295,6 +300,26 @@ export const TimerControls: React.FC<TimerControlsProps> = ({
             aria-label="Share Timer Link"
           >
             <Share2 className="w-4 h-4" />
+          </button>
+        )}
+
+        {/* View Orientation Toggle */}
+        {onToggleOrientation && (
+          <button
+            onClick={onToggleOrientation}
+            className="p-1.5 opacity-75 hover:opacity-100 transition-all"
+            title={
+              viewOrientation === 'vertical'
+                ? 'Switch to Horizontal View'
+                : 'Switch to Vertical View'
+            }
+            aria-label="Toggle View Orientation"
+          >
+            <Smartphone
+              className={`w-4 h-4 transition-transform duration-300 ${
+                viewOrientation === 'horizontal' ? 'rotate-90' : ''
+              }`}
+            />
           </button>
         )}
 
