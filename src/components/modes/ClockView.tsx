@@ -161,7 +161,7 @@ export const ClockView: React.FC<ClockViewProps> = ({
           className="text-[10px] sm:text-xs font-medium tracking-widest uppercase opacity-50"
           style={{ color: 'var(--muted-color)' }}
         >
-          Live Real-Time Flip Clock
+          Live Real Time Flip Clock
         </span>
       )}
     </div>

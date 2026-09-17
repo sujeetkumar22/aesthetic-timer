@@ -31,7 +31,7 @@ export interface StopwatchLap {
   totalTime: number; // in milliseconds
 }
 
-export type ViewOrientation = 'horizontal' | 'vertical';
+export type ViewOrientation = 'auto' | 'horizontal' | 'vertical';
 
 export interface AppSettings {
   soundEnabled: boolean;

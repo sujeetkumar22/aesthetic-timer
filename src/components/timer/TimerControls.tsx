@@ -307,11 +307,13 @@ export const TimerControls: React.FC<TimerControlsProps> = ({
         {onToggleOrientation && (
           <button
             onClick={onToggleOrientation}
-            className="p-1.5 opacity-75 hover:opacity-100 transition-all"
+            className="relative p-1.5 opacity-75 hover:opacity-100 transition-all"
             title={
-              viewOrientation === 'vertical'
-                ? 'Switch to Horizontal View'
-                : 'Switch to Vertical View'
+              viewOrientation === 'auto'
+                ? 'Orientation: Auto (Rotates with Phone)'
+                : viewOrientation === 'vertical'
+                ? 'Orientation: Vertical (Stacked)'
+                : 'Orientation: Horizontal (Side by Side)'
             }
             aria-label="Toggle View Orientation"
           >
@@ -320,6 +322,12 @@ export const TimerControls: React.FC<TimerControlsProps> = ({
                 viewOrientation === 'horizontal' ? 'rotate-90' : ''
               }`}
             />
+            {viewOrientation === 'auto' && (
+              <span
+                className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-sm"
+                title="Auto-rotate enabled"
+              />
+            )}
           </button>
         )}
 

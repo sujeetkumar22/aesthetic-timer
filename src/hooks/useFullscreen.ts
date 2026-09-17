@@ -53,6 +53,13 @@ export function useFullscreen() {
       } else if (elem.msRequestFullscreen) {
         await elem.msRequestFullscreen();
       }
+
+      // Safely ensure screen orientation can rotate dynamically in fullscreen
+      try {
+        if (window.screen?.orientation && 'unlock' in window.screen.orientation) {
+          (window.screen.orientation as any).unlock().catch(() => {});
+        }
+      } catch {}
     } catch (e) {
       console.warn('Fullscreen request failed or was rejected:', e);
     }

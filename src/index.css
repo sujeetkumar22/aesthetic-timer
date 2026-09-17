@@ -276,21 +276,49 @@
   --digit-size: min(calc(var(--card-w) * 0.42), calc(var(--card-h) * 0.58));
 }
 
-/* Mobile Landscape Orientation (< 520px height, typical horizontal phones) */
-@media (orientation: landscape) and (max-height: 520px) {
+/* Mobile Landscape Orientation (< 640px height, typical horizontal phones) */
+@media (orientation: landscape) and (max-height: 640px) {
   .flip-card-two-fullscreen,
   .flip-card-two-windowed {
-    --card-h: min(65vh, 240px);
+    --card-h: min(68vh, 260px);
     --card-w: calc(var(--card-h) * 0.82);
     --digit-size: min(calc(var(--card-w) * 0.55), calc(var(--card-h) * 0.48));
   }
 
   .flip-card-three-fullscreen,
   .flip-card-three-windowed {
-    --card-h: min(58vh, 210px);
+    --card-h: min(60vh, 220px);
     --card-w: calc(var(--card-h) * 0.80);
     --digit-size: min(calc(var(--card-w) * 0.52), calc(var(--card-h) * 0.45));
   }
+}
+
+/* Virtual Landscape Container (when mobile device is tilted horizontally while system auto-rotate is locked) */
+.virtual-landscape-container {
+  width: 100vh !important;
+  height: 100vw !important;
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  margin-left: -50vh !important;
+  margin-top: -50vw !important;
+  z-index: 50 !important;
+  overflow: hidden !important;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.virtual-landscape-container .flip-card-two-fullscreen,
+.virtual-landscape-container .flip-card-two-windowed {
+  --card-h: min(60vw, 240px);
+  --card-w: calc(var(--card-h) * 0.82);
+  --digit-size: min(calc(var(--card-w) * 0.55), calc(var(--card-h) * 0.48));
+}
+
+.virtual-landscape-container .flip-card-three-fullscreen,
+.virtual-landscape-container .flip-card-three-windowed {
+  --card-h: min(52vw, 210px);
+  --card-w: calc(var(--card-h) * 0.80);
+  --digit-size: min(calc(var(--card-w) * 0.52), calc(var(--card-h) * 0.45));
 }
 
 /* Accessibility Reduced Motion */

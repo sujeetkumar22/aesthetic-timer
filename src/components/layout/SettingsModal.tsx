@@ -26,9 +26,9 @@ interface SettingsModalProps {
 
 const AMBIENT_PRESETS: { id: AmbientSoundType; label: string; desc: string; icon: React.ReactNode }[] = [
   { id: 'rain', label: 'Rain', desc: 'Gentle pink/brown rain shower', icon: <CloudRain className="w-4 h-4 text-sky-400" /> },
-  { id: 'brown', label: 'Brown Noise', desc: 'Deep warm low-frequency roar', icon: <Waves className="w-4 h-4 text-amber-400" /> },
+  { id: 'brown', label: 'Brown Noise', desc: 'Deep warm low frequency roar', icon: <Waves className="w-4 h-4 text-amber-400" /> },
   { id: 'white', label: 'White Noise', desc: 'Crisp static frequency masking', icon: <Wind className="w-4 h-4 opacity-70" /> },
-  { id: 'alpha', label: 'Zen 432Hz', desc: 'Dual-oscillator Alpha binaural wave', icon: <Sparkles className="w-4 h-4 text-purple-400" /> },
+  { id: 'alpha', label: 'Zen 432Hz', desc: 'Dual oscillator Alpha binaural wave', icon: <Sparkles className="w-4 h-4 text-purple-400" /> },
 ];
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({
@@ -246,7 +246,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 <div>
                   <div className="font-medium">Flip Clock Mode Format</div>
                   <div className="text-[11px] opacity-75" style={{ color: 'var(--muted-color)' }}>
-                    12-Hour (AM/PM) or 24-Hour International
+                    12 Hour (AM/PM) or 24 Hour International
                   </div>
                 </div>
                 <button
@@ -267,24 +267,39 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 </button>
               </div>
 
-              {/* View Orientation (Horizontal / Vertical) */}
-              <div className="flex items-center justify-between pt-2 border-t" style={{ borderColor: 'var(--border-color)' }}>
+              {/* View Orientation (Auto / Horizontal / Vertical) */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 border-t" style={{ borderColor: 'var(--border-color)' }}>
                 <div>
                   <div className="font-medium">Timer View Orientation</div>
                   <div className="text-[11px] opacity-75" style={{ color: 'var(--muted-color)' }}>
-                    Horizontal (Side-by-side) or Vertical (Stacked Flaps)
+                    Auto (rotates with phone), Horizontal, or Vertical
                   </div>
                 </div>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 self-end sm:self-auto">
                   <button
-                    onClick={() => onUpdateSettings((s) => ({ ...s, viewOrientation: 'horizontal' }))}
+                    onClick={() => onUpdateSettings((s) => ({ ...s, viewOrientation: 'auto' }))}
                     className={`text-xs px-2.5 py-1 rounded-lg font-medium border transition-colors ${
-                      (settings.viewOrientation || 'horizontal') === 'horizontal' ? 'font-bold shadow-sm' : 'opacity-60'
+                      (settings.viewOrientation || 'auto') === 'auto' ? 'font-bold shadow-sm' : 'opacity-60'
                     }`}
                     style={{
                       borderColor: 'var(--border-color)',
                       backgroundColor:
-                        (settings.viewOrientation || 'horizontal') === 'horizontal' ? 'var(--card-top)' : 'transparent',
+                        (settings.viewOrientation || 'auto') === 'auto' ? 'var(--card-top)' : 'transparent',
+                      color: 'var(--digit-color)',
+                    }}
+                    title="Automatically rotates when phone is tilted horizontally"
+                  >
+                    Auto 🔄
+                  </button>
+                  <button
+                    onClick={() => onUpdateSettings((s) => ({ ...s, viewOrientation: 'horizontal' }))}
+                    className={`text-xs px-2.5 py-1 rounded-lg font-medium border transition-colors ${
+                      settings.viewOrientation === 'horizontal' ? 'font-bold shadow-sm' : 'opacity-60'
+                    }`}
+                    style={{
+                      borderColor: 'var(--border-color)',
+                      backgroundColor:
+                        settings.viewOrientation === 'horizontal' ? 'var(--card-top)' : 'transparent',
                       color: 'var(--digit-color)',
                     }}
                   >
@@ -593,11 +608,11 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 <kbd className="px-1.5 py-0.5 rounded font-mono border" style={{ backgroundColor: 'var(--card-top)', borderColor: 'var(--border-color)', color: 'var(--digit-color)' }}>M</kbd>
               </div>
               <div className="flex justify-between">
-                <span style={{ color: 'var(--muted-color)' }}>+1 Minute</span>
+                <span style={{ color: 'var(--muted-color)' }}>Plus 1 Min</span>
                 <kbd className="px-1.5 py-0.5 rounded font-mono border" style={{ backgroundColor: 'var(--card-top)', borderColor: 'var(--border-color)', color: 'var(--digit-color)' }}>↑</kbd>
               </div>
               <div className="flex justify-between">
-                <span style={{ color: 'var(--muted-color)' }}>-1 Minute</span>
+                <span style={{ color: 'var(--muted-color)' }}>Minus 1 Min</span>
                 <kbd className="px-1.5 py-0.5 rounded font-mono border" style={{ backgroundColor: 'var(--card-top)', borderColor: 'var(--border-color)', color: 'var(--digit-color)' }}>↓</kbd>
               </div>
             </div>

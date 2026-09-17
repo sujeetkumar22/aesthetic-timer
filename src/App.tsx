@@ -21,8 +21,9 @@ import { useSound } from './hooks/useSound';
 import { useWakeLock } from './hooks/useWakeLock';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { useLocalStorage } from './hooks/useLocalStorage';
+import { useOrientation } from './hooks/useOrientation';
 
-import { AppSettings, TimerMode, ThemeId, AmbientSoundType } from './types/timer';
+import { AppSettings, TimerMode, ThemeId, AmbientSoundType, ViewOrientation } from './types/timer';
 import { getTimerFromLocation, generateShareUrl, copyTextToClipboard } from './utils/urlParser';
 import { formatTimeDisplay } from './utils/formatters';
 import { soundSynth } from './utils/soundSynth';
@@ -39,7 +40,7 @@ const DEFAULT_SETTINGS: AppSettings = {
   ambientType: 'rain',
   autoHideControls: true,
   clockFormat: '12h',
-  viewOrientation: 'horizontal',
+  viewOrientation: 'auto',
   keepScreenAwake: true,
   desktopNotifications: false,
   focusIntention: '',
@@ -74,6 +75,13 @@ export const App: React.FC = () => {
 
   // Fullscreen hook
   const { isFullscreen, toggleFullscreen, exitFullscreen } = useFullscreen();
+
+  // Responsive device orientation engine (Auto-detects phone rotation & tilt)
+  const {
+    effectiveOrientation,
+    isVirtualLandscape,
+    virtualRotationAngle,
+  } = useOrientation(settings.viewOrientation || 'auto');
 
   // Toast notification helper
   const showToast = (msg: string) => {
@@ -127,11 +135,21 @@ export const App: React.FC = () => {
     });
   }, [setSettings]);
 
-  // Toggle View Orientation (Horizontal / Vertical)
+  // Toggle View Orientation (Auto -> Horizontal -> Vertical -> Auto)
   const handleToggleOrientation = useCallback(() => {
     setSettings((s) => {
-      const next = s.viewOrientation === 'vertical' ? 'horizontal' : 'vertical';
-      showToast(next === 'vertical' ? '📱 Vertical View (Stacked)' : '💻 Horizontal View (Side-by-side)');
+      const current = s.viewOrientation || 'auto';
+      let next: ViewOrientation;
+      if (current === 'auto') {
+        next = 'horizontal';
+        showToast('💻 Forced Horizontal (Side by Side)');
+      } else if (current === 'horizontal') {
+        next = 'vertical';
+        showToast('📱 Forced Vertical (Stacked)');
+      } else {
+        next = 'auto';
+        showToast('🔄 Auto Orientation (Rotates with Phone)');
+      }
       return { ...s, viewOrientation: next };
     });
   }, [setSettings]);
@@ -140,7 +158,7 @@ export const App: React.FC = () => {
   const handleUpdateIntention = (goal: string) => {
     setSettings((s) => ({ ...s, focusIntention: goal }));
     if (goal) {
-      showToast(`Target set: "${goal}"`);
+      showToast(`Goal set: "${goal}"`);
     }
   };
 
@@ -149,7 +167,7 @@ export const App: React.FC = () => {
     initialDurationSeconds: settings.lastDurationSeconds,
     onComplete: () => {
       playCompletion();
-      sendNotification("Time's up! — BigTimer", "Your countdown session has finished.");
+      sendNotification("Time's up | BigTimer", "Your countdown session has finished.");
     },
     onWarningTick: () => {
       playWarning();
@@ -170,7 +188,7 @@ export const App: React.FC = () => {
     onComplete: () => {
       playCompletion();
       const nextPhaseName = pomodoro.phase === 'focus' ? 'Break' : 'Focus Session';
-      sendNotification(`Session Complete! — BigTimer`, `Ready for next ${nextPhaseName}.`);
+      sendNotification(`Session Complete | BigTimer`, `Ready for next ${nextPhaseName}.`);
       const { duration } = pomodoro.advancePhase();
       pomoTimer.reset(duration);
     },
@@ -201,23 +219,23 @@ export const App: React.FC = () => {
         const { compactString } = formatTimeDisplay(timer.remainingSeconds);
         document.title = `(${compactString}) BigTimer`;
       } else {
-        document.title = 'BigTimer — Beautiful Fullscreen Timer';
+        document.title = 'BigTimer | Beautiful Fullscreen Timer';
       }
     } else if (mode === 'pomodoro') {
       if (pomoTimer.status === 'running' || pomoTimer.status === 'paused') {
         const { compactString } = formatTimeDisplay(pomoTimer.remainingSeconds);
-        document.title = `(${compactString}) ${pomodoro.phase === 'focus' ? 'Focus' : 'Break'} — BigTimer`;
+        document.title = `(${compactString}) ${pomodoro.phase === 'focus' ? 'Focus' : 'Break'} | BigTimer`;
       } else {
-        document.title = 'Pomodoro — BigTimer';
+        document.title = 'Pomodoro | BigTimer';
       }
     } else if (mode === 'stopwatch') {
       if (stopwatch.status === 'running') {
-        document.title = `⏱ Stopwatch — BigTimer`;
+        document.title = `⏱ Stopwatch | BigTimer`;
       } else {
-        document.title = 'Stopwatch — BigTimer';
+        document.title = 'Stopwatch | BigTimer';
       }
     } else if (mode === 'clock') {
-      document.title = 'Flip Clock — BigTimer';
+      document.title = 'Flip Clock | BigTimer';
     }
   }, [mode, timer.status, timer.remainingSeconds, pomoTimer.status, pomoTimer.remainingSeconds, pomodoro.phase, stopwatch.status]);
 
@@ -371,11 +389,12 @@ export const App: React.FC = () => {
     <div
       className={`min-h-screen w-full flex flex-col justify-between overflow-x-hidden transition-colors duration-400 font-sans ${
         isFullscreen ? 'h-screen overflow-hidden p-0 cursor-none-when-idle' : ''
-      }`}
+      } ${isVirtualLandscape ? 'virtual-landscape-container' : ''}`}
       style={{
         backgroundColor: 'var(--bg-color)',
         color: 'var(--digit-color)',
         fontFamily: 'var(--font-digits)',
+        ...(isVirtualLandscape ? { transform: `rotate(${virtualRotationAngle}deg)` } : {}),
       }}
     >
       {/* Top Header (Overlaid in fullscreen, in flow otherwise) */}
@@ -450,7 +469,7 @@ export const App: React.FC = () => {
                   isFullscreen={isFullscreen}
                   showHoursAlways={timer.totalDuration >= 3600}
                   onBadgeClick={() => setIsExactTimeModalOpen(true)}
-                  orientation={settings.viewOrientation}
+                  orientation={effectiveOrientation}
                 />
 
                 {/* Floating Controls with Theme Swatches */}
@@ -531,7 +550,7 @@ export const App: React.FC = () => {
               }}
               onFlip={playFlip}
               isFullscreen={isFullscreen}
-              orientation={settings.viewOrientation}
+              orientation={effectiveOrientation}
             />
 
             {/* Bottom Controls */}
@@ -587,7 +606,7 @@ export const App: React.FC = () => {
               onAddLap={stopwatch.addLap}
               onFlip={playFlip}
               isFullscreen={isFullscreen}
-              orientation={settings.viewOrientation}
+              orientation={effectiveOrientation}
             />
 
             <div
@@ -642,7 +661,7 @@ export const App: React.FC = () => {
               }}
               onFlip={playFlip}
               isFullscreen={isFullscreen}
-              orientation={settings.viewOrientation}
+              orientation={effectiveOrientation}
             />
 
             {/* Distraction-Free Controls */}
@@ -721,10 +740,10 @@ export const App: React.FC = () => {
       {/* Floating Toast */}
       <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
 
-      {/* Subtle Distraction-Free Footer */}
+      {/* Subtle Distraction Free Footer */}
       {!isFullscreen && isSetupView && mode === 'countdown' && (
         <footer className="w-full text-center py-6 text-xs select-none border-t border-white/5 opacity-60">
-          <p>BIGTIMER &mdash; Distraction-free mechanical fullscreen timer</p>
+          <p>BIGTIMER • Distraction free mechanical fullscreen timer</p>
         </footer>
       )}
     </div>

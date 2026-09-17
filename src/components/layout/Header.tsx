@@ -56,19 +56,27 @@ export const Header: React.FC<HeaderProps> = ({
           {onToggleOrientation && (
             <button
               onClick={onToggleOrientation}
-              className="p-1.5 hover:opacity-100 opacity-80 rounded-full transition-all"
+              className="relative p-1.5 hover:opacity-100 opacity-80 rounded-full transition-all"
               title={
-                viewOrientation === 'vertical'
-                  ? 'Switch to Horizontal View'
-                  : 'Switch to Vertical View'
+                viewOrientation === 'auto'
+                  ? 'Orientation: Auto (Rotates with Phone)'
+                  : viewOrientation === 'vertical'
+                  ? 'Orientation: Vertical (Stacked)'
+                  : 'Orientation: Horizontal (Side by Side)'
               }
-              aria-label="Toggle Horizontal or Vertical View"
+              aria-label="Toggle View Orientation"
             >
               <Smartphone
                 className={`w-4 h-4 transition-transform duration-300 ${
                   viewOrientation === 'horizontal' ? 'rotate-90' : ''
                 }`}
               />
+              {viewOrientation === 'auto' && (
+                <span
+                  className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-sm"
+                  title="Auto-rotate enabled"
+                />
+              )}
             </button>
           )}
 
@@ -124,19 +132,27 @@ export const Header: React.FC<HeaderProps> = ({
         {onToggleOrientation && (
           <button
             onClick={onToggleOrientation}
-            className="p-2 hover:opacity-100 opacity-80 rounded-full transition-all"
+            className="relative p-2 hover:opacity-100 opacity-80 rounded-full transition-all"
             title={
-              viewOrientation === 'vertical'
-                ? 'Switch to Horizontal View'
-                : 'Switch to Vertical View'
+              viewOrientation === 'auto'
+                ? 'Orientation: Auto (Rotates with Phone)'
+                : viewOrientation === 'vertical'
+                ? 'Orientation: Vertical (Stacked)'
+                : 'Orientation: Horizontal (Side by Side)'
             }
-            aria-label="Toggle Horizontal or Vertical View"
+            aria-label="Toggle View Orientation"
           >
             <Smartphone
               className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 ${
                 viewOrientation === 'horizontal' ? 'rotate-90' : ''
               }`}
             />
+            {viewOrientation === 'auto' && (
+              <span
+                className="absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-400 shadow-sm"
+                title="Auto-rotate enabled"
+              />
+            )}
           </button>
         )}
 

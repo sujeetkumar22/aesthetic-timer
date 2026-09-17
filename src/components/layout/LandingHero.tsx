@@ -22,7 +22,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
         }}
       >
         <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-        Distraction-Free Cinematic Timer
+        Distraction Free Cinematic Timer
       </div>
 
       {/* Main Headline */}
@@ -115,7 +115,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             className="text-xs leading-relaxed transition-colors opacity-80"
             style={{ color: 'var(--muted-color)' }}
           >
-            Inspired by classic split-flap mechanical boards. Elevates your workspace monitor or iPad.
+            Inspired by classic split flap mechanical boards. Elevates your workspace monitor or iPad.
           </p>
         </div>
 
